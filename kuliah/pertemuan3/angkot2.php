@@ -1,4 +1,7 @@
 <?php
+$jml_angkot = 10
+$no_angkot = 1
+$angkot_rusak
 echo "Mulai <br>";
 $nilai_awal =1;
 while ($nilai_awal <= 6) {
