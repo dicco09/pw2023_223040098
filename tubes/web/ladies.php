@@ -1,7 +1,14 @@
+<?php
+// Melakukan query
+require '../php/function.php';
+$kategori = "ladies"; 
+$barang = query("SELECT * FROM barang WHERE kategori = '$kategori'");
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -13,45 +20,42 @@
       crossorigin="anonymous"
     />
 
-    <title>hello word</title>
+    <title>ladies</title>
   </head>
 
   <body>
-    <div class="card-login mt-5 w-75 m-auto">
-      <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label"
-          >Username</label
-        >
-        <input
-          type="text"
-          class="form-control"
-          id="exampleFormControlInput1"
-          placeholder="Masukkan Username "
-        />
+  <nav class="navbar navbar-light bg-dark">
+  <div class="container-fluid">
+  <a class="navbar-brand text-light" href="#">Dicco Distro</a>
+  </div>
+</nav>
+  
+</a>
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label"
-          >Password</label
-        >
-        <input
-          type="password"
-          class="form-control"
-          id="exampleFormControlInput1"
-          placeholder="Masukkan Password"
-        />
-      </div>
-      <a href="../index.html"
-        ><button type="button" class="btn btn-dark">Daftar</button></a
-      >
-      <p class="text-center">
-        Sudah Memiliki Akun ?
-        <a class="text-decoration-none" href="../index.html"> Login</a>
-      </p>
+    </nav>
+   <!-- Card -->
+
+   <div class="container">
+    <div class="row">
+    
+      <?php foreach ($barang as $brg) : ?>
+        <div class="col-lg-4 d-flex">
+          <div class="barang mt-3 mb-3 p-3" >
+             <div class="card" style="width: 18rem;">
+             <img src="../img/<?= $brg['gambar'] ?>" class="card-img-top" alt="..."></div>
+             <div class="card-body">
+             <h5 class="card-title"><?= $brg['nama_barang'] ?></h5>
+             <p class="card-text">Rp <?= $brg['harga'] ?></p>
+             <a href="detail-barang.php?id=<?= $brg["id_barang"] ?>" class="btn btn-primary">Details</a>
+             </div>
+             </div>
+            </div>
+            <?php endforeach; ?>
+        </div>  
     </div>
+   </div>
 
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"

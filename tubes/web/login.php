@@ -1,3 +1,37 @@
+<?php
+session_start();
+
+if (isset($_SESSION["login"])) {
+    header("location: ../index.php");
+    exit;
+}
+
+require '../php/function.php';
+
+if (isset($_POST["login"])) {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+    $conn = koneksi();
+
+    $result = mysqli_query($conn, "SELECT * FROM user WHERE username = '$username'");
+
+    // CEK USERNAME
+    if (mysqli_num_rows($result) === 1) {
+        // CEK PASSWORD
+        $row = mysqli_fetch_assoc($result);
+        if (password_verify($password, $row["password"])) {
+            // set session
+            $_SESSION["login"] = true;
+
+            header("location: ../index.php");
+            exit;
+        }
+    }
+
+    $error = true;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,41 +47,47 @@
       crossorigin="anonymous"
     />
 
-    <title>hello word</title>
+    <title>login-user</title>
   </head>
 
   <body>
+
+  <form action=""method="post">
     <div class="card-login mt-5 w-75 m-auto">
       <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label"
+        <label for="username" class="form-label"
           >Username</label
         >
         <input
+        name="username"
           type="text"
           class="form-control"
           id="exampleFormControlInput1"
           placeholder="Masukkan Username "
         />
       </div>
+
       <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label"
+        <label for="password" class="form-label"
           >Password</label
         >
         <input
+        name="password"
           type="password"
           class="form-control"
           id="exampleFormControlInput1"
           placeholder="Masukkan Password"
         />
       </div>
-      <a href="web/home.html"
-        ><button type="button" class="btn btn-dark">Masuk</button></a
-      >
+      <button type="submit" name="login" class="btn btn-dark">Masuk</button>
+      
       <p class="text-center">
         Belum Memiliki Akun ?
-        <a class="text-decoration-none" href="web/register.html"> Daftar</a>
+        <a class="text-decoration-none" href="register.php"> Daftar</a>
       </p>
+      <p class="text-center">Login sebagai admin ? <a href="../admind/login-admind.php">Login</a></p>
     </div>
+    </form>
 
     <!-- Optional JavaScript; choose one of the two! -->
 
